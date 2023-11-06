@@ -9,6 +9,8 @@ editor: visual
 
 install.packages("ggplot2")
 library(ggplot2)
+library(tibble)
+library(rsample)
 
 ##################################
 #
@@ -40,5 +42,24 @@ ggplot() +
 
 ```{r}
 
+# Train/test split
+numTrain <- 20   # number of training instances
+numTest <- numInstances - numTrain
 
+set.seed(123) # For reproducibility
+
+data <- tibble(X = X, y = y)
+
+split_obj <- initial_split(data, prop = numTrain/numInstances)
+
+# Extract train and test data
+train_data <- training(split_obj)
+test_data <- testing(split_obj)
+
+# Extract X_train, X_test, y_train, y_test
+X_train <- train_data$X
+y_train <- train_data$y
+
+X_test <- test_data$X
+y_test <- test_data$y
 ```
