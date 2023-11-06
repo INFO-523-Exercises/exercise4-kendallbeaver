@@ -6,6 +6,9 @@ editor: visual
 ---
 
 ```{r}
+#################
+# Load packages
+#################
 
 install.packages("ggplot2")
 install.packages("DescTools")
@@ -20,7 +23,9 @@ library(Metrics)
 library(caret)
 library(DescTools)
 library(gridExtra)
+```
 
+```{r}
 ##################################
 #
 # Generate Synthetic Attributes
@@ -211,6 +216,26 @@ plot4 <- ggplot() +
   xlab('X4') + ylab('X5') +
   ggtitle(sprintf("Correlation between X4 and X5 = %.4f", cor(X4[-c((numInstances-numTest+1):numInstances)], X5[-c((numInstances-numTest+1):numInstances)])))
 
-# Combine plots into a 2x2 grid
+# Combine plots into a 2x2 grid/as one entire picture
 grid.arrange(plot1, plot2, plot3, plot4, ncol=2)
+```
+
+```{r}
+
+# Split data into training and testing sets
+train_indices <- 1:(numInstances - numTest) #200 - 180
+test_indices <- (numInstances - numTest + 1):numInstances
+
+# Create combined training and testing sets
+X_train2 <- cbind(X[train_indices], X2[train_indices])
+X_test2 <- cbind(X[test_indices], X2[test_indices])
+
+X_train3 <- cbind(X[train_indices], X2[train_indices], X3[train_indices])
+X_test3 <- cbind(X[test_indices], X2[test_indices], X3[test_indices])
+
+X_train4 <- cbind(X[train_indices], X2[train_indices], X3[train_indices], X4[train_indices])
+X_test4 <- cbind(X[test_indices], X2[test_indices], X3[test_indices], X4[test_indices])
+
+X_train5 <- cbind(X[train_indices], X2[train_indices], X3[train_indices], X4[train_indices], X5[train_indices])
+X_test5 <- cbind(X[test_indices], X2[test_indices], X3[test_indices], X4[test_indices], X5[test_indices])
 ```
