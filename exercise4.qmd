@@ -8,6 +8,7 @@ editor: visual
 ```{r}
 
 install.packages("ggplot2")
+install.packages("DescTools")
 
 library(ggplot2)
 library(tibble)
@@ -16,6 +17,7 @@ library(parsnip)
 library(dplyr)
 library(Metrics)
 library(caret)
+library(DescTools)
 
 ##################################
 #
@@ -123,8 +125,13 @@ eval_data <- tibble(
   estimate = y_pred_test
 )
 
+truth <- as.vector(y_test)
+estimate <- y_pred_test
+
 # Model evaluation
-rmse_value <- rmse(data = eval_data, truth = truth, estimate = estimate)
+rmse_value <- rmse(truth, estimate)
+# rmse_value <- rmse(data = eval_data, truth = truth, estimate = estimate)
+# The above function was Greg's function and it wasn't working
 r2_value <- rsq(eval_data, truth = truth, estimate = estimate)
 
 cat("Root mean squared error =", sprintf("%.4f", rmse_value$.estimate), "\n")
