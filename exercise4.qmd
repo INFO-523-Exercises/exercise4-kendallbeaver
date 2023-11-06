@@ -11,6 +11,7 @@ install.packages("ggplot2")
 library(ggplot2)
 library(tibble)
 library(rsample)
+library(parsnip)
 
 ##################################
 #
@@ -41,6 +42,9 @@ ggplot() +
 ```
 
 ```{r}
+################################################
+# Split Input Data into Training and Test Sets
+################################################
 
 # Train/test split
 numTrain <- 20   # number of training instances
@@ -62,4 +66,24 @@ y_train <- train_data$y
 
 X_test <- test_data$X
 y_test <- test_data$y
+```
+
+```{r}
+
+################################################
+# Fit Regression Model to Training Set
+################################################
+
+# Create a linear regression model specification
+lin_reg_spec <- linear_reg() |> 
+  set_engine("lm")
+
+# Fit the model to the training data
+lin_reg_fit <- lin_reg_spec |> 
+  fit(y ~ X, data = train_data)
+```
+
+```{r}
+
+
 ```
