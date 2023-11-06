@@ -9,6 +9,7 @@ editor: visual
 
 install.packages("ggplot2")
 install.packages("DescTools")
+install.packages("gridExtra")
 
 library(ggplot2)
 library(tibble)
@@ -18,6 +19,7 @@ library(dplyr)
 library(Metrics)
 library(caret)
 library(DescTools)
+library(gridExtra)
 
 ##################################
 #
@@ -181,5 +183,34 @@ ggplot() +
 # Effect of Correlated Attributes
 ##################################
 
+# Generate the variables, creating X2-X5.
+set.seed(1)
+X2 <- 0.5 * X + rnorm(numInstances, mean=0, sd=0.04)
+X3 <- 0.5 * X2 + rnorm(numInstances, mean=0, sd=0.01)
+X4 <- 0.5 * X3 + rnorm(numInstances, mean=0, sd=0.01)
+X5 <- 0.5 * X4 + rnorm(numInstances, mean=0, sd=0.01)
 
+# Create plots
+plot1 <- ggplot() +
+  geom_point(aes(X, X2), color='black') +
+  xlab('X') + ylab('X2') +
+  ggtitle(sprintf("Correlation between X and X2 = %.4f", cor(X[-c((numInstances-numTest+1):numInstances)], X2[-c((numInstances-numTest+1):numInstances)])))
+
+plot2 <- ggplot() +
+  geom_point(aes(X2, X3), color='black') +
+  xlab('X2') + ylab('X3') +
+  ggtitle(sprintf("Correlation between X2 and X3 = %.4f", cor(X2[-c((numInstances-numTest+1):numInstances)], X3[-c((numInstances-numTest+1):numInstances)])))
+
+plot3 <- ggplot() +
+  geom_point(aes(X3, X4), color='black') +
+  xlab('X3') + ylab('X4') +
+  ggtitle(sprintf("Correlation between X3 and X4 = %.4f", cor(X3[-c((numInstances-numTest+1):numInstances)], X4[-c((numInstances-numTest+1):numInstances)])))
+
+plot4 <- ggplot() +
+  geom_point(aes(X4, X5), color='black') +
+  xlab('X4') + ylab('X5') +
+  ggtitle(sprintf("Correlation between X4 and X5 = %.4f", cor(X4[-c((numInstances-numTest+1):numInstances)], X5[-c((numInstances-numTest+1):numInstances)])))
+
+# Combine plots into a 2x2 grid
+grid.arrange(plot1, plot2, plot3, plot4, ncol=2)
 ```
