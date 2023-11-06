@@ -12,6 +12,7 @@ library(ggplot2)
 library(tibble)
 library(rsample)
 library(parsnip)
+library(dplyr)
 
 ##################################
 #
@@ -42,9 +43,9 @@ ggplot() +
 ```
 
 ```{r}
-################################################
-# Split Input Data into Training and Test Sets
-################################################
+#######################################################
+# Step 1: Split Input Data into Training and Test Sets
+#######################################################
 
 # Train/test split
 numTrain <- 20   # number of training instances
@@ -70,20 +71,40 @@ y_test <- test_data$y
 
 ```{r}
 
-################################################
-# Fit Regression Model to Training Set
-################################################
+######################################################
+# Step 2: Fit/Create Regression Model to Training Set
+######################################################
 
 # Create a linear regression model specification
-lin_reg_spec <- linear_reg() |> 
+lin_reg_spec <- linear_reg() |> # This just contains info that says "lm".
   set_engine("lm")
 
 # Fit the model to the training data
-lin_reg_fit <- lin_reg_spec |> 
+lin_reg_fit <- lin_reg_spec |> ### So this is OUR training model.
   fit(y ~ X, data = train_data)
 ```
 
 ```{r}
 
+################################################
+# Step 3: Apply Model to the Test Set
+################################################
 
+# Apply model to the test set
+y_pred_test <- predict(lin_reg_fit, new_data = test_data) |>
+  pull(.pred) # This generates 180 predicted target/y-values.
+```
+
+```{r}
+
+#################################################
+# Step 4: Evaluate Model Performance on Test Set (Visually)
+#################################################
+
+# Plotting true vs predicted values
+ggplot() + 
+  geom_point(aes(x = as.vector(y_test), y = y_pred_test), color = 'black') +
+  ggtitle('Comparing true and predicted values for test set') +
+  xlab('True values for y') +
+  ylab('Predicted values for y')
 ```
