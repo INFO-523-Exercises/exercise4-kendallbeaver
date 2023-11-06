@@ -160,5 +160,26 @@ intercept <- coef_values["(Intercept)"]
 
 cat("Slope =", slope, "\n")
 
+cat("Intercept =", intercept, "\n")
+
+### Step 4: Postprocessing
+
+# Plot outputs
+ggplot() +
+  geom_point(aes(x = as.vector(X_test), y = as.vector(y_test)), color = 'black') +
+  geom_line(aes(x = as.vector(X_test), y = y_pred_test), color = 'blue', linewidth = 1) +
+  ggtitle(sprintf('Predicted Function: y = %.2fX + %.2f', slope, intercept)) +
+  xlab('X') +
+  ylab('y')
+
+# Original/true function: -3*X + 1
+```
+
+```{r}
+
+##################################
+# Effect of Correlated Attributes
+##################################
+
 
 ```
