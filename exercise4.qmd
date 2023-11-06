@@ -1,0 +1,11 @@
+---
+title: "exercise4"
+author: "Kendall Beaver"
+format: html
+editor: visual
+---
+
+```{r}
+
+
+```
