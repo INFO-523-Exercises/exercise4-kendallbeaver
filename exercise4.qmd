@@ -8,11 +8,14 @@ editor: visual
 ```{r}
 
 install.packages("ggplot2")
+
 library(ggplot2)
 library(tibble)
 library(rsample)
 library(parsnip)
 library(dplyr)
+library(Metrics)
+library(caret)
 
 ##################################
 #
@@ -97,9 +100,9 @@ y_pred_test <- predict(lin_reg_fit, new_data = test_data) |>
 
 ```{r}
 
-#################################################
+###########################################################
 # Step 4: Evaluate Model Performance on Test Set (Visually)
-#################################################
+###########################################################
 
 # Plotting true vs predicted values
 ggplot() + 
@@ -107,4 +110,22 @@ ggplot() +
   ggtitle('Comparing true and predicted values for test set') +
   xlab('True values for y') +
   ylab('Predicted values for y')
+```
+
+```{r}
+#####################
+# Step 4 (CONT'D)
+#####################
+
+# Prepare data for yardstick evaluation, "truth estimates"
+eval_data <- tibble(
+  truth = as.vector(y_test),
+  estimate = y_pred_test
+)
+
+# Model evaluation
+rmse_value <- rmse(data = eval_data, truth = truth, estimate = estimate)
+r2_value <- rsq(eval_data, truth = truth, estimate = estimate)
+
+cat("Root mean squared error =", sprintf("%.4f", rmse_value$.estimate), "\n")
 ```
