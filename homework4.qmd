@@ -1,0 +1,48 @@
+---
+title: "homework4"
+format: html
+editor: visual
+---
+
+```{r}
+
+#################
+# Load packages
+#################
+
+install.packages("ggplot2")
+install.packages("DescTools")
+install.packages("gridExtra")
+install.packages("tune", repos = "http://cran.r-project.org")
+
+pacman::p_load(dlookr,
+               tidyverse,
+               here,
+               formattable,
+               knitr,
+               dplyr)
+
+library(ggplot2)
+library(tibble)
+library(rsample)
+library(parsnip)
+library(dplyr)
+library(Metrics)
+library(caret)
+library(DescTools)
+library(gridExtra)
+library(recipes)
+library(magrittr)
+library(here)
+```
+
+```{r}
+
+# Load data
+
+cage_free <- read_csv(here('./data/cage-free-percentages.csv'))
+cage_free #96 x 4
+
+egg_production <- read.csv(here('./data/egg-production.csv'))
+egg_production #220 x 6
+```
