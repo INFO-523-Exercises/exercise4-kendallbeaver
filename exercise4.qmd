@@ -13,6 +13,7 @@ editor: visual
 install.packages("ggplot2")
 install.packages("DescTools")
 install.packages("gridExtra")
+install.packages("tune", repos = "http://cran.r-project.org")
 
 library(ggplot2)
 library(tibble)
@@ -23,6 +24,17 @@ library(Metrics)
 library(caret)
 library(DescTools)
 library(gridExtra)
+library(recipes)
+library(magrittr)
+
+add_recipe <- function(x, recipe, ..., blueprint = NULL) #{
+  #check_dots_empty()
+  #validate_recipes_available()
+  #action <- new_action_recipe(recipe, blueprint)
+  #add_action(x, action, "recipe")
+#}
+
+tune_grid <- function(object, ...)
 ```
 
 ```{r}
@@ -466,7 +478,6 @@ tune_results <-
   resamples = bootstraps(train_data, times = 5),
   grid = alphas
 )
-
 
 # Extract best parameters
 best_params <- tune_results %>% select_best("rmse")
