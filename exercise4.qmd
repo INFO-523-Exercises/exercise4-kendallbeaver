@@ -34,7 +34,15 @@ add_recipe <- function(x, recipe, ..., blueprint = NULL) #{
   #add_action(x, action, "recipe")
 #}
 
-tune_grid <- function(object, ...)
+tune_grid <- function(object, ...){}
+select_best <- function(x, ...){}
+finalize_model <- function(x, ...){}
+grid_regular <- function(x, ...){}
+
+fit <- function(x, data = NULL, model = "default", task = "default", 
+    search = "heuristic", mpar = NULL, feature = "none", 
+    scale = "default", transform = "none", 
+    created = NULL, fdebug = FALSE, ...)
 ```
 
 ```{r}
