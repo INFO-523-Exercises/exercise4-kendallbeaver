@@ -127,14 +127,47 @@ ggplot() +
 
 ```{r}
 ##################################
-# Train & Test the Data Set
+# Create my Train & Test Datasets
 ##################################
 
+# Train/test split
 
+numTrain <- 20
+numTest <- numInstances - numTrain
 
+# For reproducibility
+
+set.seed(123)
+
+# Create new data table
+
+data <- tibble(X = X, y = y)
+
+split_obj <- initial_split(data, prop = numTrain/numInstances)
+
+# Extract train and test data
+train_data <- training(split_obj)
+test_data <- testing(split_obj)
+
+# Extract X_train, X_test, y_train, y_test
+X_train <- train_data$X
+y_train <- train_data$y
+
+X_test <- test_data$X
+y_test <- test_data$y
+```
+
+```{r}
+
+######################################
+# Fit Regression Model to Training Set
+######################################
+
+# Create a linear regression model specification
 lin_reg_spec <- linear_reg() |> 
   set_engine("lm")
 
+# Fit the model to the training data
 lin_reg_fit <- lin_reg_spec |> 
-  fit(x ~ y, data = filtered_eggs_prod)
+  fit(y ~ X, data = train_data)
 ```
