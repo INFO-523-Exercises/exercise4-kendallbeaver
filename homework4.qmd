@@ -86,12 +86,29 @@ egg_prod |>
   formattable()
 
 # "Hatching eggs" will impede production, so filtering for "table eggs" 
-filterd_eggs_prod <- egg_prod %>%
+filtered_eggs_prod <- egg_prod %>%
   filter(prod_type %in% "table eggs") %>%
   filter(prod_process %in% "all")
 
-# "Table eggs" dataset (it will be interesting to see correlation between non-organic feed producing more eggs than organically-fed chickens or if the relationship is about the same)
-filterd_eggs_prod |> formattable()
+# "Table eggs" dataset from 7/31/16 - 1/31/21
+filtered_eggs_prod |> formattable()
+
+# Create plot: First, create short-hand notaion for the x- & y-axis
+x <- filtered_eggs_prod$n_hens
+y <- filtered_eggs_prod$n_eggs
+
+# Create plot: Second, plot the vectors
+plot(x, y,
+     xlab = "No. of Hens", 
+     ylab = "No. of Eggs",
+     main = "Scatter Plot of Table Egg Production from July 2016 - Jan. 2021")
+
+# Assuming your_data is your data frame and x_column, y_column are your column names
+linear_model <- lm(y_column ~ x_column, data = your_data)
+
+# Print the summary of the linear model
+summary(linear_model)
+
 ```
 
 ```{r}
