@@ -66,6 +66,13 @@ cage_free |> formattable()
 # Original dimensions of dataset: 220 rows x 6 columns
 original_egg_prod_data <- read.csv(here('./data/egg-production.csv'))
 
+read_csv(here('./data/egg-production.csv'), col_types = cols(observed_month = col_date(),
+  prod_type = col_factor(),
+  prod_process = col_factor(),
+  n_hens = col_double(),
+  n_eggs = col_double()
+))
+
 # Removing unncessary "source" column
 egg_prod <- original_egg_prod_data %>% select(-source)
 egg_prod
