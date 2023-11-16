@@ -168,6 +168,39 @@ lin_reg_spec <- linear_reg() |>
   set_engine("lm")
 
 # Fit the model to the training data
-lin_reg_fit <- lin_reg_spec |> 
-  fit(y ~ X, data = train_data)
+
+lin_reg_fit <- lm(y ~ X, data = filtered_eggs_prod)
+
+# This is causing problems so I substituted with the above.  
+# lin_reg_fit <- lin_reg_spec |> 
+#   fit(y ~ X, data = train_data)
+```
+
+```{r}
+##############################
+# Apply model to the test set
+##############################
+
+y_pred_test <- predict(lin_reg_fit, new_data = test_data) 
+
+# The "pull" method was causing problems above so I removed this method to get this chunk working. 
+# ... |> pull(.pred)
+
+y_pred_test
+```
+
+```{r}
+########################################
+#Evaluate Model Performance on Test Set
+########################################
+
+ggplot() + 
+  geom_point(aes(x = as.vector(y_test), y = y_pred_test), color = 'black') +
+  ggtitle('Comparing true and predicted values for test set') +
+  xlab('True values for y') +
+  ylab('Predicted values for y')
+
+# There's a mismatch on these vectors messing with the plot. Need to fix this:
+# length(y_test) = 50
+# length(y_pred_test) = 55
 ```
