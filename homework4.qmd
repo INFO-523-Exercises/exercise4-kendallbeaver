@@ -37,32 +37,40 @@ library(here)
 ```
 
 ```{r}
-
+##################################
 # Load & analyze "Cage Free" data
+##################################
 
 # Original dimensions of dataset: 96 rows x 4 columns
 original_data <- read_csv(here('./data/cage-free-percentages.csv'))
 
+# Removing unncessary "source" column
 cage_free <- original_data %>% select(-source)
 
 # Timespan of data: Over 13 yrs worth of data
 cage_free |> summary()
 
+# Presentable view of dataset
 cage_free |> formattable()
-
-
 ```
 
 ```{r}
-
+######################################
 # Load & analyze "Egg Production" data
+######################################
 
-original_egg_prod_data <- read.csv(here('./data/egg-production.csv')) 
-# 220 rows x 6 columns
+# Original dimensions of dataset: 220 rows x 6 columns
+original_egg_prod_data <- read.csv(here('./data/egg-production.csv'))
 
-egg_prod <- original_egg_prod_data %>% select(-source)
+# Removing unncessary "source" column
+egg_prod <- as_tibble(original_egg_prod_data %>% select(-source))
+egg_prod
 
-egg_prod |> summary() 
+# Timespan of data: Over 13 yrs worth of data
+egg_prod |> summary()
+
+# Presentable view of dataset
+egg_prod |> formattable()
 ```
 
 ```{r}
