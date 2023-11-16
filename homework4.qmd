@@ -4,15 +4,29 @@ format: html
 editor: visual
 ---
 
+### Intro
+
+### Outline
+
+-   Chosen Dataset & its Features/Characteristics
+
+-   Multi Linear Regression Methods
+
+-   Multi-dimensional Linear Regression Methods
+
+-   Assessment/Conclusion
+
+### Chosen Dataset & its Features/Characteristics
+
 ```{r}
 
 #################
 # Load packages
 #################
 
-install.packages("ggplot2")
-install.packages("DescTools")
-install.packages("gridExtra")
+install.packages("ggplot2", repos = "http://cran.r-project.org")
+install.packages("DescTools", repos = "http://cran.r-project.org")
+install.packages("gridExtra", repos = "http://cran.r-project.org")
 install.packages("tune", repos = "http://cran.r-project.org")
 
 pacman::p_load(dlookr,
@@ -102,7 +116,7 @@ filtered_eggs_prod |> formattable()
 # Create short-hand notaion of X- & y-axis
 X <- filtered_eggs_prod$n_hens
 y <- filtered_eggs_prod$n_eggs
-y_true <- (-5.828*10^8) + 26.24*x
+y_true <- (-5.828*10^8) + 26.24*X
 
 # Create Scatter Plot of Data
 plot(X, y,
