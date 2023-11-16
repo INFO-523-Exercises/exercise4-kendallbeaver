@@ -92,50 +92,49 @@ filtered_eggs_prod <- egg_prod %>%
 
 # "Table eggs" dataset from 7/31/16 - 1/31/21
 filtered_eggs_prod |> formattable()
-
-# Create plot: First, create short-hand notaion for the x- & y-axis
-x <- filtered_eggs_prod$n_hens
-y <- filtered_eggs_prod$n_eggs
-
-# Create plot: Second, plot the vectors
-plot(x, y,
-     xlab = "No. of Hens", 
-     ylab = "No. of Eggs",
-     main = "Scatter Plot of Table Egg Production from July 2016 - Jan. 2021")
-
-# Assuming your_data is your data frame and x_column, y_column are your column names
-linear_model <- lm(y_column ~ x_column, data = your_data)
-
-# Print the summary of the linear model
-summary(linear_model)
-
 ```
 
 ```{r}
+################################################################
+# Scatter Plot, Plot of Original Function & Calc. of Lin. Funct.
+################################################################
 
-##################################
-#
-# Generate Synthetic Attributes
-#
-##################################
+# Create short-hand notaion of X- & y-axis
+X <- filtered_eggs_prod$n_hens
+y <- filtered_eggs_prod$n_eggs
+y_true <- (-5.828*10^8) + 26.24*x
 
-# parameters
-seed <- 1            # seed for random number generation 
-numInstances <- 200  # number of data instances
+# Create Scatter Plot of Data
+plot(X, y,
+     xlab = "No. of Hens", 
+     ylab = "No. of Eggs",
+     main = "Scatter Plot of 'Table Egg' Production (July 2016 - Jan 2021)")
 
-# Set seed
-set.seed(seed)
+# Find the linear function of data for the following plot
+linear_model <- lm(n_eggs ~ n_hens, data = filtered_eggs_prod)
+summary(linear_model)
 
-# Generate data
-X <- matrix(runif(numInstances), ncol=1)
-y_true <- -3*X + 1 
-y <- y_true + matrix(rnorm(numInstances), ncol=1)
+# True function: y=(−5.828×10^8 +26.24×)
 
-# Plot
+# Plot of Linear Function for Data
 ggplot() +
   geom_point(aes(x=X, y=y), color="black") +
   geom_line(aes(x=X, y=y_true), color="blue", linewidth=1) +
-  ggtitle('True function: y = -3X + 1') +
-  xlab('X') +
-  ylab('y')
+  ggtitle('Plot of Original Function: y = (-5.828 * 10^8) + 26.24 * X') +
+  xlab('X = No. of Hens') +
+  ylab('y = No. of Eggs')
+```
+
+```{r}
+##################################
+# Train & Test the Data Set
+##################################
+
+
+
+lin_reg_spec <- linear_reg() |> 
+  set_engine("lm")
+
+lin_reg_fit <- lin_reg_spec |> 
+  fit(x ~ y, data = filtered_eggs_prod)
 ```
