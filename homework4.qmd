@@ -56,6 +56,8 @@ cage_free |> summary()
 
 # Presentable view of dataset
 cage_free |> formattable()
+
+#Summary: Data is limited; numbers are percentages and missing values.
 ```
 
 ```{r}
@@ -79,7 +81,17 @@ egg_prod <- original_egg_prod_data %>% select(-source)
 egg_prod |> summary()
 
 # Presentable view of dataset
-egg_prod |> formattable()
+egg_prod |> 
+  filter() |>
+  formattable()
+
+# "Hatching eggs" will impede production, so filtering for "table eggs" 
+filterd_eggs_prod <- egg_prod %>%
+  filter(prod_type %in% "table eggs") %>%
+  filter(prod_process %in% "all")
+
+# "Table eggs" dataset (it will be interesting to see correlation between non-organic feed producing more eggs than organically-fed chickens or if the relationship is about the same)
+filterd_eggs_prod |> formattable()
 ```
 
 ```{r}
