@@ -42,7 +42,11 @@ library(here)
 ##################################
 
 # Original dimensions of dataset: 96 rows x 4 columns
-original_data <- read_csv(here('./data/cage-free-percentages.csv'))
+original_data <- read_csv(here('./data/cage-free-percentages.csv'), col_types = cols(observed_month = col_date(),
+  percent_hens = col_double(),
+  percent_eggs = col_double(),
+  observed_month = col_date()
+))
 
 # Removing unncessary "source" column
 cage_free <- original_data %>% select(-source)
@@ -63,7 +67,7 @@ cage_free |> formattable()
 original_egg_prod_data <- read.csv(here('./data/egg-production.csv'))
 
 # Removing unncessary "source" column
-egg_prod <- as_tibble(original_egg_prod_data %>% select(-source))
+egg_prod <- original_egg_prod_data %>% select(-source)
 egg_prod
 
 # Timespan of data: Over 13 yrs worth of data
