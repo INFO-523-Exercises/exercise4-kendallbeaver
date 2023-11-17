@@ -113,7 +113,7 @@ filtered_eggs_prod |> formattable()
 
 ```{r}
 ################################################################
-#  & Calc. of Lin. Funct.
+# Calc. of Lin. Funct.
 ################################################################
 
 # Create short-hand notaion of X- & y-axis
@@ -151,24 +151,17 @@ ggplot() +
   ylab('y = No. of Eggs')
 ```
 
+### Create a 70/30 Split of My Egg Prod Data for Training & Testing
+
 ```{r}
 ##################################
 # Create my Train & Test Datasets
 ##################################
 
-# Train/test split
-
-#numTrain <- 20
-#numTest <- numInstances - numTrain
-
-# Update: I'm going to run a 70/30 split first, where I'm going to train the model(s) with 70% of the data.
-
 # For reproducibility
 set.seed(123)
 
-# Create new data table
-data <- tibble(X = X, y = y)
-
+# Start by creating a 70/30 split
 split_obj <- initial_split(data, prop = 0.7)
 
 # Extract train and test data
