@@ -38,4 +38,8 @@ grid_regular <- function(x, ...){}
 #    search = "heuristic", mpar = NULL, feature = "none", 
 #    scale = "default", transform = "none", 
 #    created = NULL, fdebug = FALSE, ...)
+
+# Calculate linear function
+linear_model <- lm(n_eggs ~ n_hens, data = filtered_eggs_prod)
+summary(linear_model)
 ```

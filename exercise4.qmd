@@ -141,23 +141,16 @@ estimate <- y_pred_test
 # Model evaluation
 
 rmse_value <- rmse(data = eval_data, truth = truth, estimate = estimate)
-rmse_value <- rmse(truth, estimate)
-rmse_value <- as.data.frame(rmse_value)
-rmse_value
+r2_value <- rsq(eval_data, truth = truth, estimate = estimate)
 
-# r2_value <- rsq(eval_data, truth = truth, estimate = estimate)
-# The above function wasn't working 
-r2_value <- R2(estimate, truth)
-
-cat("Root mean squared error =", sprintf("%.4f", rmse_value), "\n")
-# Greg's original function that didn't work: cat("Root mean squared error =", sprintf("%.4f", rmse_value$.estimate), "\n")
-
-cat('R-squared =', sprintf("%.4f", r2_value), "\n")
-# Greg's original function that didn't work: cat('R-squared =', sprintf("%.4f", r2_value$.estimate), "\n")
+cat("Root mean squared error =", sprintf("%.4f", rmse_value$.estimate), "\n")
 ```
 
 ```{r}
+cat('R-squared =', sprintf("%.4f", r2_value$.estimate), "\n")
+```
 
+```{r}
 #########################
 # Step 5: Postprocessing
 #########################

@@ -16,7 +16,13 @@ editor: visual
 
 -   Assessment/Conclusion
 
+-   Appendix: Code
+
 ### Chosen Dataset & its Features/Characteristics
+
+### Appendix: Code
+
+#### Load Packages
 
 ```{r}
 
@@ -41,6 +47,8 @@ pacman::p_load(tidymodels,
 theme_set(theme_bw() + theme(legend.position = "top"))
 ```
 
+#### Analyze Cage Free Dataset
+
 ```{r}
 ##################################
 # Load & analyze "Cage Free" data
@@ -64,6 +72,8 @@ cage_free |> formattable()
 
 #Summary: Data is limited; numbers are percentages and missing values.
 ```
+
+#### Analyze Egg Production Dataset
 
 ```{r}
 ######################################
@@ -99,30 +109,32 @@ filtered_eggs_prod <- egg_prod %>%
 filtered_eggs_prod |> formattable()
 ```
 
+#### Creating Original Dataset & Calculation of Original Linear Function
+
 ```{r}
 ################################################################
-# Scatter Plot, Plot of Original Function & Calc. of Lin. Funct.
+#  & Calc. of Lin. Funct.
 ################################################################
 
 # Create short-hand notaion of X- & y-axis
 X <- filtered_eggs_prod$n_hens
 y <- filtered_eggs_prod$n_eggs
-y_true <- (-5.828*10^8) + 26.24*X
+y_original <- (-5.828*10^8) + 26.24*X
 data <- tibble(X = X, y = y)
 
-# Calculate linear function
-linear_model <- lm(n_eggs ~ n_hens, data = filtered_eggs_prod)
-summary(linear_model)
-
 # Set Linear Regression Model
-lin_reg_spec <- linear_reg() |> # This just contains info that says "lm".
+lin_reg_spec <- linear_reg() |>
   set_engine("lm")
 
 # Now find the linear function according to the egg_prod data
-lin_reg_fit <- lin_reg_spec |> #
+lin_reg_fit <- lin_reg_spec |>
   fit(y ~ X, data = data)
+lin_reg_fit # Original function: y=(−5.828×10^8 + 26.24×)
+```
 
-# True function: y=(−5.828×10^8 +26.24×)
+#### Scatter Plot of Original Data & Plot Including Original Function
+
+```{r}
 
 # Create Scatter Plot of Data
 plot(X, y,
@@ -133,8 +145,8 @@ plot(X, y,
 # Plot of Linear Function for Data
 ggplot() +
   geom_point(aes(x=X, y=y), color="black") +
-  geom_line(aes(x=X, y=y_true), color="blue", linewidth=1) +
-  ggtitle('Plot of Original Function: y = (-5.828 * 10^8) + 26.24 * X') +
+  geom_line(aes(x=X, y=y_original), color="blue", linewidth=1) +
+  ggtitle('Plot of Original Function: y = -5.828*10^8 + 26.24(X)') +
   xlab('X = No. of Hens') +
   ylab('y = No. of Eggs')
 ```
@@ -152,11 +164,9 @@ ggplot() +
 # Update: I'm going to run a 70/30 split first, where I'm going to train the model(s) with 70% of the data.
 
 # For reproducibility
-
 set.seed(123)
 
 # Create new data table
-
 data <- tibble(X = X, y = y)
 
 split_obj <- initial_split(data, prop = 0.7)
@@ -180,16 +190,13 @@ y_test <- test_data$y
 ######################################
 
 # Create a linear regression model specification
-lin_reg_spec <- linear_reg() |> 
+lin_reg_spec <- linear_reg() |>
   set_engine("lm")
 
 # Fit the model to the training data
 
-lin_reg_fit <- lm(y ~ X, data = filtered_eggs_prod)
-
-# This is causing problems so I substituted with the above.  
-# lin_reg_fit <- lin_reg_spec |> 
-#   fit(y ~ X, data = train_data)
+lin_reg_fit <- lin_reg_spec |> 
+  fit(y ~ X, data = train_data)
 ```
 
 ```{r}
@@ -197,10 +204,8 @@ lin_reg_fit <- lm(y ~ X, data = filtered_eggs_prod)
 # Apply model to the test set
 ##############################
 
-y_pred_test <- predict(lin_reg_fit, new_data = test_data) 
-
-# The "pull" method was causing problems above so I removed this method to get this chunk working. 
-# ... |> pull(.pred)
+y_pred_test <- predict(lin_reg_fit, new_data = test_data) |> 
+  pull(.pred)
 
 y_pred_test
 ```
