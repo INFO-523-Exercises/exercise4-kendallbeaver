@@ -93,9 +93,9 @@ lin_reg_spec <- linear_reg() |> # This just contains info that says "lm".
   set_engine("lm")
 
 # Fit the model to the training data
-lin_reg_fit <- lin_reg_spec |> ### So this is OUR training model.
-  fit(y_true ~ X, data = data)
-#  fit(y ~ X, data = train_data)
+lin_reg_fit <- lin_reg_spec |> 
+  fit(y ~ X, data = train_data) 
+  # This is the linear function of our training data
 ```
 
 ```{r}
@@ -107,7 +107,7 @@ lin_reg_fit <- lin_reg_spec |> ### So this is OUR training model.
 # Apply model to the test set
 y_pred_test <- predict(lin_reg_fit, new_data = test_data) |> 
   pull(.pred)
-# This generates 180 predicted target/y-values.
+# We're brining in the test data into our Trained Linear Function.
 ```
 
 ```{r}
@@ -141,7 +141,6 @@ estimate <- y_pred_test
 # Model evaluation
 
 rmse_value <- rmse(data = eval_data, truth = truth, estimate = estimate)
-# The above function was Greg's function and it wasn't working
 rmse_value <- rmse(truth, estimate)
 rmse_value <- as.data.frame(rmse_value)
 rmse_value
