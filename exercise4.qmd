@@ -70,15 +70,15 @@ data <- tibble(X = X, y = y)
 split_obj <- initial_split(data, prop = numTrain/numInstances) #Randomly split 10% of data
 
 # Extract train and test data
-train_data <- training(split_obj)
-test_data <- testing(split_obj)
+train_data <- training(split_obj) #20 attribute & response values
+test_data <- testing(split_obj) #180 attribute & response values
 
 # Extract X_train, X_test, y_train, y_test
-X_train <- as_tibble(train_data$X)
-y_train <- as_tibble(train_data$y)
+X_train <- train_data$X
+y_train <- train_data$y
 
-X_test <- as_tibble(test_data$X)
-y_test <- as.numeric(test_data$y)
+X_test <- test_data$X
+y_test <- test_data$y
 ```
 
 ```{r}
@@ -103,9 +103,9 @@ lin_reg_fit <- lin_reg_spec |> ### So this is OUR training model.
 ################################################
 
 # Apply model to the test set
-y_pred_test <- predict(lin_reg_fit, new_data = test_data) |> pull(.pred)
-# The pipe through command "pull(.pred)" below wasn't be recoganized as an applicable method so I removed it.
-# ... |> pull(.pred) # This generates 180 predicted target/y-values.
+y_pred_test <- predict(lin_reg_fit, new_data = test_data) |> 
+  pull(.pred)
+# This generates 180 predicted target/y-values.
 ```
 
 ```{r}
@@ -122,7 +122,7 @@ ggplot() +
   ylab('Predicted values for y')
 ```
 
-```{r}
+```{r Code Chunk 7}
 #####################
 # Step 4 (CONT'D)
 #####################
@@ -138,7 +138,7 @@ estimate <- y_pred_test
 
 # Model evaluation
 
-# rmse_value <- rmse(data = eval_data, truth = truth, estimate = estimate)
+rmse_value <- rmse(data = eval_data, truth = truth, estimate = estimate)
 # The above function was Greg's function and it wasn't working
 rmse_value <- rmse(truth, estimate)
 rmse_value <- as.data.frame(rmse_value)
