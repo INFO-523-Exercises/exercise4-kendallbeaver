@@ -4,6 +4,8 @@ format: html
 editor: visual
 ---
 
+## Analyzing Egg Production of Caged Hens (July 2016 - Jan 2021)
+
 ### Intro
 
 ### Outline
@@ -73,7 +75,7 @@ cage_free |> formattable()
 #Summary: Data is limited; numbers are percentages and missing values.
 ```
 
-#### Analyze Egg Production Dataset
+#### Analyze "Egg Production" Dataset
 
 ```{r}
 ######################################
@@ -90,7 +92,6 @@ original_egg_prod_data <- read_csv(here('./data/egg-production.csv'), col_types 
 
 # Removing unncessary "source" column
 egg_prod <- original_egg_prod_data %>% select(-source)
-#egg_prod
 
 # Timespan of data: Over 13 yrs worth of data
 egg_prod |> summary()
@@ -119,7 +120,7 @@ filtered_eggs_prod |> formattable()
 # Create short-hand notaion of X- & y-axis
 X <- filtered_eggs_prod$n_hens
 y <- filtered_eggs_prod$n_eggs
-y_original <- (-5.828*10^8) + 26.24*X
+
 data <- tibble(X = X, y = y)
 
 # Set Linear Regression Model
@@ -129,7 +130,9 @@ lin_reg_spec <- linear_reg() |>
 # Now find the linear function according to the egg_prod data
 lin_reg_fit <- lin_reg_spec |>
   fit(y ~ X, data = data)
-lin_reg_fit # Original function: y=(−5.828×10^8 + 26.24×)
+lin_reg_fit # Original function: y=(−1.401×10^9 + 28.79X)
+
+y_original <- (-1.401*10^9) + 28.79*X
 ```
 
 #### Scatter Plot of Original Data & Plot Including Original Function
@@ -146,12 +149,12 @@ plot(X, y,
 ggplot() +
   geom_point(aes(x=X, y=y), color="black") +
   geom_line(aes(x=X, y=y_original), color="blue", linewidth=1) +
-  ggtitle('Plot of Original Function: y = -5.828*10^8 + 26.24(X)') +
+  ggtitle('Plot of Original Function: y = -1.401*10^9 + 28.79(X)') +
   xlab('X = No. of Hens') +
   ylab('y = No. of Eggs')
 ```
 
-### Create a 70/30 Split of My Egg Prod Data for Training & Testing
+### Create My Training & Testing Datasets
 
 ```{r}
 ##################################
@@ -161,8 +164,8 @@ ggplot() +
 # For reproducibility
 set.seed(123)
 
-# Start by creating a 70/30 split
-split_obj <- initial_split(data, prop = 0.7)
+# Start by creating a 1/3 split
+split_obj <- initial_split(data, prop = 0.8)
 
 # Extract train and test data
 train_data <- training(split_obj)

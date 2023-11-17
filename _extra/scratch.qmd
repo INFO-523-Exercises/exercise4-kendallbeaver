@@ -43,3 +43,18 @@ grid_regular <- function(x, ...){}
 linear_model <- lm(n_eggs ~ n_hens, data = filtered_eggs_prod)
 summary(linear_model)
 ```
+
+```{r}
+
+# Me removing just "hatching eggs" column because I'm only accounting for caged egg production. 
+
+# This was if I was going to do a 1/3 train and 2/3 test 
+numTrain <- 55
+numTest <- length(X) - numTrain
+
+# For reproducibility
+set.seed(123)
+
+# Start by creating a 1/3 split
+split_obj <- initial_split(data, prop = numTrain/length(X))
+```
