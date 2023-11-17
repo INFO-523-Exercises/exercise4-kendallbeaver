@@ -20,6 +20,7 @@ pacman::p_load(tidymodels,
                ranger,
                randomForest,
                glmnet,
+               yardstick,
                gridExtra)
 
 # Global ggplot theme
@@ -93,7 +94,8 @@ lin_reg_spec <- linear_reg() |> # This just contains info that says "lm".
 
 # Fit the model to the training data
 lin_reg_fit <- lin_reg_spec |> ### So this is OUR training model.
-  fit(y ~ X, data = train_data)
+  fit(y_true ~ X, data = data)
+#  fit(y ~ X, data = train_data)
 ```
 
 ```{r}

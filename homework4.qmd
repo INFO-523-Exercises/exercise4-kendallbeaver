@@ -24,30 +24,21 @@ editor: visual
 # Load packages
 #################
 
-install.packages("ggplot2", repos = "http://cran.r-project.org")
-install.packages("DescTools", repos = "http://cran.r-project.org")
-install.packages("gridExtra", repos = "http://cran.r-project.org")
-install.packages("tune", repos = "http://cran.r-project.org")
+# Required packages
+if (!require(pacman))
+  install.packages("pacman")
 
-pacman::p_load(dlookr,
+pacman::p_load(tidymodels,
                tidyverse,
+               ranger,
+               randomForest,
+               glmnet,
                here,
                formattable,
-               knitr,
-               dplyr)
+               gridExtra)
 
-library(ggplot2)
-library(tibble)
-library(rsample)
-library(parsnip)
-library(dplyr)
-library(Metrics)
-library(caret)
-library(DescTools)
-library(gridExtra)
-library(recipes)
-library(magrittr)
-library(here)
+# Global ggplot theme
+theme_set(theme_bw() + theme(legend.position = "top"))
 ```
 
 ```{r}
@@ -117,18 +108,27 @@ filtered_eggs_prod |> formattable()
 X <- filtered_eggs_prod$n_hens
 y <- filtered_eggs_prod$n_eggs
 y_true <- (-5.828*10^8) + 26.24*X
+data <- tibble(X = X, y = y)
+
+# Calculate linear function
+linear_model <- lm(n_eggs ~ n_hens, data = filtered_eggs_prod)
+summary(linear_model)
+
+# Set Linear Regression Model
+lin_reg_spec <- linear_reg() |> # This just contains info that says "lm".
+  set_engine("lm")
+
+# Now find the linear function according to the egg_prod data
+lin_reg_fit <- lin_reg_spec |> #
+  fit(y ~ X, data = data)
+
+# True function: y=(−5.828×10^8 +26.24×)
 
 # Create Scatter Plot of Data
 plot(X, y,
      xlab = "No. of Hens", 
      ylab = "No. of Eggs",
      main = "Scatter Plot of 'Table Egg' Production (July 2016 - Jan 2021)")
-
-# Find the linear function of data for the following plot
-linear_model <- lm(n_eggs ~ n_hens, data = filtered_eggs_prod)
-summary(linear_model)
-
-# True function: y=(−5.828×10^8 +26.24×)
 
 # Plot of Linear Function for Data
 ggplot() +
@@ -146,8 +146,10 @@ ggplot() +
 
 # Train/test split
 
-numTrain <- 20
-numTest <- numInstances - numTrain
+#numTrain <- 20
+#numTest <- numInstances - numTrain
+
+# Update: I'm going to run a 70/30 split first, where I'm going to train the model(s) with 70% of the data.
 
 # For reproducibility
 
@@ -157,7 +159,7 @@ set.seed(123)
 
 data <- tibble(X = X, y = y)
 
-split_obj <- initial_split(data, prop = numTrain/numInstances)
+split_obj <- initial_split(data, prop = 0.7)
 
 # Extract train and test data
 train_data <- training(split_obj)
