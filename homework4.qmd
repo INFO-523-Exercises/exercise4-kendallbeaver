@@ -8,6 +8,8 @@ editor: visual
 
 ### Intro
 
+At the beginning of 2016, about \~90% of chickens were caged but has decreased over the following five years, accounting for \~70% at the beginning of 2021.
+
 ### Outline
 
 -   Chosen Dataset & its Features/Characteristics
@@ -72,6 +74,10 @@ cage_free |> summary()
 
 # Presentable view of dataset
 cage_free |> formattable()
+
+#cage_free |> 
+#  diagnose() |>
+#  formattable()
 
 #Summary: Data is limited; numbers are percentages and missing values.
 ```
@@ -205,9 +211,9 @@ lin_reg_fit <- lin_reg_spec |>
 ```
 
 ```{r}
-##############################
+##########################################
 # Apply our trained model to the test set
-##############################
+##########################################
 
 y_pred_test <- predict(lin_reg_fit, new_data = test_data) |> 
   pull(.pred)
