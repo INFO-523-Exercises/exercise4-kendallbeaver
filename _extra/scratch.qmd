@@ -1,3 +1,15 @@
+### Outline
+
+-   Chosen Dataset & its Features/Characteristics
+
+-   Multi Linear Regression Methods
+
+-   Multi-dimensional Linear Regression Methods
+
+-   Assessment/Conclusion
+
+-   Appendix: Code
+
 ```{r}
 
 {r}

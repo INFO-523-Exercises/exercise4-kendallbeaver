@@ -8,25 +8,23 @@ editor: visual
 
 ### Intro
 
-At the beginning of 2016, about \~90% of chickens were caged but has decreased over the following five years, accounting for \~70% at the beginning of 2021.
+Two datasets were included at the inception of this project, which is included in the Appendix: "Cage Free Percentages" and "Egg Production."
 
-Two datasets were included from the tidymodels universe (referenced in the Appendix) at the inception of this project: "Cage Free Percentages", which encompasses the percentage of cage-free hens from 2007-2021, and "Egg Production," which captures the quantity of baby eggs (hatching eggs) and eggs that are sold to consumers (table eggs) over a five-year time period, from 2016 - 2021.
+The first dataset, Cage Free Percentages, details the percentage of cage-free hens that were part of an unindentified egg production facility over a thirteen-year period, from 2007-2021. At the beginning of 2007, over 96% of hens were kept in caged facilities for egg production, but this number decreased significantly over the next thirteen years by over 27%, accounting for only \~70% of hens that were caged at the beginning of 2021.
 
-### Outline
+The second dataset, Egg Production, captured the monthly quantity of eggs that were hatched, split into two categories: hatching eggs, what could be referred to as eggs that hatch baby chicks, and table eggs, non-hatching eggs that are sold to consumers for consumption. This data is captured over a five-year time period, from 2016 - 2021.
 
--   Chosen Dataset & its Features/Characteristics
+Also captured in the latter dataset are monthly values split between caged hens vs. non-caged hens, which is further split up into whether non-caged hens were fed a natural, organic diet and laid organic eggs, or whether they were fed a modified, engineered diet and laid non-organic eggs. Though not explicitly stated, I make the assumption that caged hens were fed a modified, engineered diet to ramp up egg production, but this assumption is irrelevant because I wanted to focus on finding the linear relationship between the amount of hens in the production facility vs. the amount of table eggs that were hatched.
 
--   Multi Linear Regression Methods
+### Plan of Analysis: Choosing the Right Dataset & Training-Test Ratio
 
--   Multi-dimensional Linear Regression Methods
+Since I was interested in analyzing the highest volume of egg production, I discarded the first dataset, Cage Free Production, especially since it contained a lot of missing values, and I chose the Egg Production dataset for my analysis, specifically focusing on caged hens since they made up over 75% of egg production.
 
--   Assessment/Conclusion
+In trying to find an optimal regression model that can best fit the data as well as predict egg production, I opted for an 80/20 training-test split primarily because my filtered data was limited. I then tried a 70/30 and 60/40 ratio, but the 80/20 produced the best prediction regression model.
 
--   Appendix: Code
+If the same training methods were applied to the cage-free hens and the amount of eggs that they produced, it would be expected that the 80/20 would find the best model because those datasets were also limited. This analysis and point of this project showed that when in doubt and when you have a limited dataset, to include more attribute values in your training model than less values, but not too much as to over fit your model.
 
-### Chosen Dataset & its Features/Characteristics
-
-### Appendix: Code
+### Appendix
 
 #### Load Packages
 
