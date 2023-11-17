@@ -4,7 +4,7 @@ format: html
 editor: visual
 ---
 
-## Analyzing Egg Production of Caged Hens  (July 2016 - Jan 2021)
+## Analyzing Egg Production of Caged Hens (July 2016 - Jan 2021)
 
 ### Intro
 
@@ -43,6 +43,7 @@ pacman::p_load(tidymodels,
                glmnet,
                here,
                formattable,
+               dlookr,
                gridExtra)
 
 # Global ggplot theme
@@ -96,15 +97,23 @@ egg_prod <- original_egg_prod_data %>% select(-source)
 # Timespan of data: Over 13 yrs worth of data
 egg_prod |> summary()
 
+egg_prod |> 
+  diagnose() |>
+  formattable()
+
 # Presentable view of dataset
 egg_prod |> 
   filter() |>
   formattable()
 
 # "Hatching eggs" will impede production, so filtering for "table eggs" 
-filtered_eggs_prod <- egg_prod %>%
-  filter(prod_type %in% "table eggs") %>%
+filtered_eggs_prod <- egg_prod |>
+  filter(prod_type %in% "table eggs") |>
   filter(prod_process %in% "all")
+
+filtered_eggs_prod |>
+  diagnose() |>
+  formattable()
 
 # "Table eggs" dataset from 7/31/16 - 1/31/21
 filtered_eggs_prod |> formattable()
@@ -197,7 +206,7 @@ lin_reg_fit <- lin_reg_spec |>
 
 ```{r}
 ##############################
-# Apply model to the test set
+# Apply our trained model to the test set
 ##############################
 
 y_pred_test <- predict(lin_reg_fit, new_data = test_data) |> 
