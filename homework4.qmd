@@ -10,6 +10,8 @@ editor: visual
 
 At the beginning of 2016, about \~90% of chickens were caged but has decreased over the following five years, accounting for \~70% at the beginning of 2021.
 
+Two datasets were included from the tidymodels universe (referenced in the Appendix) at the inception of this project: "Cage Free Percentages", which encompasses the percentage of cage-free hens from 2007-2021, and "Egg Production," which captures the quantity of baby eggs (hatching eggs) and eggs that are sold to consumers (table eggs) over a five-year time period, from 2016 - 2021.
+
 ### Outline
 
 -   Chosen Dataset & its Features/Characteristics
