@@ -152,6 +152,8 @@ y_original <- (-1.401*10^9) + 28.79*X
 
 #### Scatter Plot of Original Data & Plot Including Original Function
 
+This plot is interesting because there's been a 13% increase in the number of hens at this production facility, correlating to a 13% increase in the number of eggs produced each month which turns out to be \~2.39 eggs per hen. Traditionally, hens have only been able to lay one egg per day, so this graph tells us that these caged hens could be fed with food that has been genetically modified to include additional hormones.
+
 ```{r}
 
 # Create Scatter Plot of Data
