@@ -148,9 +148,9 @@ lin_reg_spec <- linear_reg() |>
 # Now find the linear function according to the egg_prod data
 lin_reg_fit <- lin_reg_spec |>
   fit(y ~ X, data = data)
-lin_reg_fit # Original function: y=(−1.401×10^9 + 28.79X)
+lin_reg_fit
 
-y_original <- (-1.401*10^9) + 28.79*X
+y_original <- (-5.828*10^8) + 26.24*X #This is our original function.
 ```
 
 #### Scatter Plot of Original Data & Plot Including Original Function
