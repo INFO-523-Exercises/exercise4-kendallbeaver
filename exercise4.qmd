@@ -105,9 +105,8 @@ lin_reg_fit <- lin_reg_spec |>
 ################################################
 
 # Apply model to the test set
-y_pred_test <- predict(lin_reg_fit, new_data = test_data) |> 
-  pull(.pred)
-# We're brining in the test data into our Trained Linear Function.
+y_pred_test <- predict(lin_reg_fit, new_data = test_data) |> pull(.pred) 
+# Ignore error message, the values will still be generated
 ```
 
 ```{r}
