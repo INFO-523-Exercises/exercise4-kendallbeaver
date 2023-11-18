@@ -133,6 +133,7 @@ eval_data <- tibble(
   truth = as.vector(y_test),
   estimate = y_pred_test
 )
+eval_data
 
 truth <- as.vector(y_test)
 estimate <- y_pred_test

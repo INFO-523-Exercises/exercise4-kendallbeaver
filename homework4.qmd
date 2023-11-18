@@ -234,8 +234,36 @@ ggplot() +
   ggtitle('Comparing true and predicted values for test set') +
   xlab('True values for y') +
   ylab('Predicted values for y')
+```
 
-# There's a mismatch on these vectors messing with the plot. Need to fix this:
-# length(y_test) = 50
-# length(y_pred_test) = 55
+```{r}
+
+################################
+# Yardstick & model evaluations
+################################
+
+# Prepare data for yardstick evaluation, "truth estimates"
+eval_data <- tibble(
+  truth = as.vector(y_test),
+  estimate = y_pred_test
+) # Ignore error message
+eval_data
+
+truth <- as.vector(y_test)
+estimate <- y_pred_test
+
+# Model evaluation
+
+rmse_value <- rmse(data = eval_data, truth = truth, estimate = estimate)
+r2_value <- rsq(eval_data, truth = truth, estimate = estimate)
+
+cat("Root mean squared error =", sprintf("%.4f", rmse_value$.estimate), "\n")
+
+# RMSE: 1.0273
+```
+
+```{r}
+cat('R-squared =', sprintf("%.4f", r2_value$.estimate), "\n")
+
+# R-squared: 0.3911
 ```
