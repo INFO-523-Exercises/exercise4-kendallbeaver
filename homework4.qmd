@@ -132,7 +132,10 @@ filtered_eggs_prod |> formattable()
 # Calc. of Lin. Funct.
 ################################################################
 
-# Create short-hand notaion of X- & y-axis
+# Set seed so Greg can reproduce this
+set.seed(123)
+
+# Extract hens (X) and eggs produced (y) from dataset and create tibble.
 X <- filtered_eggs_prod$n_hens
 y <- filtered_eggs_prod$n_eggs
 
