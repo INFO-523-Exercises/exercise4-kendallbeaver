@@ -212,7 +212,7 @@ lin_reg_fit <- lin_reg_spec |>
   fit(y ~ X, data = train_data)
 lin_reg_fit
 
-lin_reg_function <- -5.828*10^8 + 26.24*X
+trained_lin_reg_function <- -5.828*10^8 + 26.24*X
 ```
 
 ```{r}
@@ -222,6 +222,7 @@ lin_reg_function <- -5.828*10^8 + 26.24*X
 
 y_pred_test <- predict(lin_reg_fit, new_data = test_data) |> pull(.pred)
 # Ignore error message, the values will still be generated
+y_pred_test
 ```
 
 ```{r}
@@ -266,4 +267,10 @@ cat("Root mean squared error =", sprintf("%.4f", rmse_value$.estimate), "\n")
 cat('R-squared =', sprintf("%.4f", r2_value$.estimate), "\n")
 
 # R-squared: 0.3911
+```
+
+```{r}
+X <- 0.26550866
+lin_reg_function <- -5.828e+08 + 2.624e+01*X 
+lin_reg_function
 ```
